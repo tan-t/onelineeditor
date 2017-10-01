@@ -15,30 +15,38 @@
     </script>
     <link href="./assets/jquery.highlight-within-textarea.css" rel="stylesheet">
     <script src="./lib/jquery.highlight-within-textarea.js"></script>
-    <div>
+    <script src="https://unpkg.com/vue"></script>
+<div class="container-fluid">
+<div class="main-container" id="tab">
+  <ul class="nav nav-tabs">
+    <li class="nav-item" v-for="tab in tabs">
+      <a class="nav-link" v-bind:class="{active:tab.isActive}" href="#" v-on:click="onClick" :key="tab.id" :data-id="tab.id">{{tab.name}}</a>
+    </li>
+  </ul>
+  <div v-for="tab in tabs" :class="{show:tab.isActive}" class="editor-container">
     <form class="form">
-        <div class="form-group">
-            <textarea id="todo" name="todo" class="form-control" rows="60" cols="40"></textarea>
-        </div>
-        <!-- <div class="btn-group">
-          <button class="btn btn-primary"><span>save</span></button>
-        </div> -->
+      <div class="form-group">
+
+        <textarea id="editor" name="editor" class="form-control" v-model="tab.main"
+        @keydown.ctrl.70="onCtrlF"
+        @keydown.ctrl.80="onCtrlP"
+        @keydown.ctrl.84="onCtrlT"
+        @keydown.ctrl.tab="onCtrlTab"
+
+        :data-id="tab.id"
+        ></textarea>
+      </div>
+      <!-- <div class="btn-group">
+        <button class="btn btn-primary"><span>save</span></button>
+      </div> -->
     </form>
-    </div>
-    <div>
-      <form class="form">
-          <div class="form-group">
-              <input type="text" class="form-control" id="query" name="query">
-          </div>
-          <div class="form-group">
-              <input type="text" class="form-control" id="replacement" name="replacement">
-          </div>
-      </form>
-    </div>
-
-
-
+    <search-area :query="query" @search="onSearch" @replaceall="onReplaceAll"></search-area>
+  </div>
+  <command-line @close="onCtrlP" @enter="onEnterCommand" :hasError="commandHasError" :error="commandErrors"></command-line>
+</div>
+</div>
 </body>
+
 <script>
     // You can also require other files to run in this process
     require('./renderer.js')

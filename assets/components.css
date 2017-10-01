@@ -1,3 +1,23 @@
 .form-control.hwt-input{
   color:inherit;
 }
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #002b36;
+  background-color: #2aa198;
+}
+
+html,body,.container-fluid{
+  height:100%;
+}
+
+.editor-container {
+  display: none;
+}
+
+.editor-container textarea.form-control{
+  height:80vh;
+}
+
+.editor-container.show{
+  display: inherit;
+}
