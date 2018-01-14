@@ -101,7 +101,7 @@ OneLineEditor.Interpreter.prototype.getArg_ = function(input) {
      
      if(input[index] == '"'){
        if(input[index - 1] != '\\'){
-         var arg = {key:argKey,value:input.slice(bodyFrom,index),index};
+         var arg = {key:argKey,value:input.slice(bodyFrom,index).replace(`\\"`,`"`),index};
          console.log(arg);
          return arg;
        }
