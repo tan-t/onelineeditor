@@ -4,3 +4,4 @@ require('./match.js');
 require('./sort.js');
 require('./uniq.js');
 require('./replace.js');
+require('./favorite.js');

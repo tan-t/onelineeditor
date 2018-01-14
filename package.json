@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^1.7.8"
+    "electron": "^1.7.8",
+    "lodash": "^4.17.4",
+    "node-persist": "^2.1.0"
   }
 }

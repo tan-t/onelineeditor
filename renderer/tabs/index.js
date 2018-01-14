@@ -1,9 +1,12 @@
 require('./search-area/index.js');
 require('./command-line/index.js');
+const favoriteDao = require('../dao-factory').getFavoriteDao();
+// var ipc = require('electron').ipcRenderer;
+favorites = favoriteDao.selectAll();
 
 OneLineEditor.Tabs= new Vue({
   el:'#tab',
-  data:{tabs:[{name:'untitled',main:'',isActive:true,id:1}],query:'',command:'',commandHasError:false,commandErrors:''},
+  data:{tabs:[{name:'untitled',main:'',isActive:true,id:1}],query:'',command:'',commandHasError:false,commandErrors:'',favorites},
   methods:{
     onClick:function(e){
       OneLineEditor.Tabs.activateClicked(this.tabs,$(e.target).data('id'));
@@ -52,6 +55,14 @@ OneLineEditor.Tabs= new Vue({
       setTimeout(()=>{
         OneLineEditor.Tabs.focusActive($(this.$el),this.tabs);
       },10);
+    },
+    onFavorite(e){
+    // ipc.on('asynchronous-reply', function(response) {
+    //     this.favorites.push(response.inserted);
+    // });
+    // ipc.send('asynchronous-message', {type:'favorite',favorite:e});
+    favoriteDao.insert(e);
+    favoriteDao.commit();
     },
     onCtrlP:function(e){
       var $modal = $(this.$el).find('#command-line');
