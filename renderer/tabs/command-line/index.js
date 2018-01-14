@@ -1,7 +1,6 @@
 require('./favorites');
 const favoriteDao = require('../../dao-factory').getFavoriteDao();
 const uuidv1 = require('uuid/v1');
-favorites = favoriteDao.selectAll();
 
 Vue.component('command-line',{
   template:`
@@ -68,7 +67,7 @@ Vue.component('command-line',{
   },
   data() {
     return {
-      favorites
+      favorites:favoriteDao.selectAll()
     }
   }
 });

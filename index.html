@@ -42,7 +42,7 @@
     </form>
     <search-area :query="query" @search="onSearch" @replaceall="onReplaceAll"></search-area>
   </div>
-  <command-line @close="onCtrlP" @enter="onEnterCommand" @favorite="onFavorite" :hasError="commandHasError" :error="commandErrors" :favorites="favorites"></command-line>
+  <command-line @close="onCtrlP" @enter="onEnterCommand" :hasError="commandHasError" :error="commandErrors"></command-line>
 </div>
 </div>
 </body>
