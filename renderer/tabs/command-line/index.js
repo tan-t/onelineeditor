@@ -1,5 +1,11 @@
+require('./favorites');
+const favoriteDao = require('../../dao-factory').getFavoriteDao();
+const uuidv1 = require('uuid/v1');
+favorites = favoriteDao.selectAll();
+
 Vue.component('command-line',{
-  template:`<div class="modal" id="command-line" role="dialog" aria-hidden="true" data-show="true"> 
+  template:`
+<div class="modal" id="command-line" role="dialog" aria-hidden="true" data-show="true"> 
   <div class="modal-dialog"> 
     <div class="modal-content"> 
       <div class="modal-body"> 
@@ -10,9 +16,26 @@ Vue.component('command-line',{
           </div> 
         </form>
         <div class="btn-group">
-          <button type="button" class="btn btn-default" @click="onClickFavorite">add to favorite</button>
+          <button type="button" class="btn btn-default" @click="onClickFavoriteBtn">★</button>
         </div>
-      </div> 
+    <div class="panel-group">
+    <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+    <h4 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#favorite" aria-expanded="true" aria-controls="favorite">
+        favorites
+      </a>
+    </h4>
+    </div>
+    <div class="collapse in" id="favorite">
+     
+      <div class="well">
+        <favorite :favorites="favorites" @clickFavorite="onSelectFavorite" @deleteFavorite="onDeleteFavorite"></favorite>
+      </div>
+    </div>
+    </div>
+    </div>
+   </div> 
     </div> <!-- /.modal-content --> 
   </div> <!-- /.modal-dialog --> 
 </div> <!-- /.modal -->
@@ -28,9 +51,25 @@ Vue.component('command-line',{
       onCtrlP:function(e){
         this.$emit(OneLineEditor.CommandLine.EventType.CLOSE);
       },
-      onClickFavorite(){
-        this.$emit(OneLineEditor.CommandLine.EventType.FAVORITE,$('#command').val()); 
+      onClickFavoriteBtn(){
+        var item = {command:$('#command').val(),id:uuidv1()};
+        favoriteDao.insert(item);
+        favoriteDao.commit();
+        this.favorites.push(item);
+      },
+      onDeleteFavorite(e) {
+        favoriteDao.delete(e);
+        favoriteDao.commit();
+        this.favorites.splice(this.favorites.findIndex(f=>f.id == e),1);
+      },
+      onSelectFavorite(e) {
+        $('#command').val(e);
       }
+  },
+  data() {
+    return {
+      favorites
+    }
   }
 });
 

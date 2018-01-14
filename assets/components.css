@@ -21,3 +21,12 @@ html,body,.container-fluid{
 .editor-container.show{
   display: inherit;
 }
+
+.favorite-list-item{
+  display:flex;
+  justify-content: space-between;
+}
+#favorite {
+  overflow-y: scroll;
+  max-height: 70vh;
+}
