@@ -55,7 +55,11 @@ OneLineEditor.Interpreter.prototype.findVerbFromIndex_ = function() {
       return verb(args);
     }
     if(input[argIndex] === '-') {
-      var arg = this.getArg_(input.slice(argIndex + 1,input.length));
+      try{
+      var arg = this.getArg_(input.slice(argIndex,input.length));
+      } catch(error) {
+        return error;
+      }
       argIndex += arg.index;
       args[arg.key] = arg.value || true;
       continue;
